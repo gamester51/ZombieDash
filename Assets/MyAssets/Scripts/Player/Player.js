@@ -7,6 +7,7 @@
 
 //player variables
 var mySprite : PackedSprite; //variable for art
+var spawnPoint : Transform; //spawn poiont transform
 
 //movement variables
 var speeD : float; //variable for speed, set in inspector
@@ -22,9 +23,18 @@ var shootCool : float; //variable for cooldown
 var bulletPrefab : Transform; //variable for actual gameobject reference...set in inspector
 var bulletSpeed : float; //self explanatory
 
+//function that set variables and runs functions when LEVEL starts
 function Start () 
 {
+	//spawn the player
+	Spawn ();
+}
 
+//function for spawning...not fish
+function Spawn ()
+{
+	//set players transform to match spawn points transform
+	transform.position = spawnPoint.position;
 }
 
 //function to determine collisioon with objects
@@ -36,6 +46,21 @@ function OnCollisionEnter(other : Collision)
 		//if player is touching ground, canjump is true
 		canJump = true;
 	}
+	//checking to see if player collided with zombie
+	if(other.gameObject.tag == "zombie")
+	{
+		//run zombie attack function
+		ZombieAttack ();
+	}
+}
+
+//function for zombie attacks
+function ZombieAttack ()
+{
+	//wait for a certain amount of time for animation
+	yield WaitForSeconds(0.5);
+	// run spawn function
+	Spawn ();
 }
 
 //function for when player is moving

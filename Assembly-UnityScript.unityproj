@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\!notes\Notes.js" />
      <Compile Include="Assets\MyAssets\Scripts\EverythingElse\Bullet.js" />
+     <Compile Include="Assets\MyAssets\Scripts\EverythingElse\zombie.js" />
      <Compile Include="Assets\MyAssets\Scripts\Player\Player.js" />
      <None Include="Assets\NGUI\Resources\Shaders\Depth.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
