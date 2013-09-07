@@ -1,6 +1,7 @@
 #pragma strict
 
 //Insert name of game Here
+//Player Script
 //Developed by InsaneGamer.net and Frafjord LLC
 //Copyright 2013
 
@@ -83,7 +84,7 @@ function Update ()
 			// add force(movement) to created object, which direction and how fast
 			shotGun.rigidbody.AddForce(transform.right * bulletSpeed);
 			//shoot cooldown number(arbitrary)
-			shootCool = 1.5;
+			shootCool = 1;
 		}
 	}
 	//shoot cooldown code
