@@ -8,7 +8,8 @@ added some basic collision detection
 9/6/13
 created ability to shoot, and added shoot cooldown timer
 
-
+9/7/13
+added standing zombie, pit zombie, and sawblades with platform for obstacles
 
 
 

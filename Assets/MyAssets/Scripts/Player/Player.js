@@ -17,6 +17,7 @@ var autoMove : boolean = false; //variable to tell developer whether or not play
 
 var canJump : boolean; //variable to see if player is on ground
 
+var attemptS : int; //attempts counter, goes up when you die
 //shooting variables
 var canShoot : boolean; // variable to set cooldown
 var shootCool : float; //variable for cooldown
@@ -35,6 +36,17 @@ function Spawn ()
 {
 	//set players transform to match spawn points transform
 	transform.position = spawnPoint.position;
+	//turn autoMove on
+	autoMove = true;
+}
+
+//function to add an attempt everytime you respawn
+function AttemptsCounter ()
+{
+	//add one to the atempts counter
+	attemptS ++;
+	//respawn
+	Spawn ();
 }
 
 //function to determine collisioon with objects
@@ -49,6 +61,10 @@ function OnCollisionEnter(other : Collision)
 	//checking to see if player collided with zombie
 	if(other.gameObject.tag == "zombie")
 	{
+		//turn auto move off
+		autoMove = false;
+		//turn off ability to jump
+		canJump = false;
 		//run zombie attack function
 		ZombieAttack ();
 	}
@@ -59,8 +75,8 @@ function ZombieAttack ()
 {
 	//wait for a certain amount of time for animation
 	yield WaitForSeconds(0.5);
-	// run spawn function
-	Spawn ();
+	// run attempts counter function
+	AttemptsCounter ();
 }
 
 //function for when player is moving
