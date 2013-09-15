@@ -15,6 +15,8 @@ var jumpspeeD : float; //variable for jumpspeed, set in inspector
 
 var autoMove : boolean = false; //variable to tell developer whether or not player is set to automatically move
 
+var isPaused : boolean; //variable to tell if game is paused
+
 var canJump : boolean; //variable to see if player is on ground
 
 var attemptS : int; //attempts counter, goes up when you die
@@ -27,6 +29,10 @@ var bulletSpeed : float; //self explanatory
 //function that set variables and runs functions when LEVEL starts
 function Start () 
 {
+	//set the game time to 1(1=on)
+	Time.timeScale = 1;
+	//set isPaused variable to off
+	isPaused = false;
 	//spawn the player
 	Spawn ();
 }
@@ -40,13 +46,37 @@ function Spawn ()
 	autoMove = true;
 }
 
+//function for death and effects
+function Death ()
+{
+	// TEMP code, when more levels are aviable will edit this code
+	Application.LoadLevel(Application.loadedLevel);//reloads current level
+}
 //function to add an attempt everytime you respawn
 function AttemptsCounter ()
 {
 	//add one to the atempts counter
 	attemptS ++;
 	//respawn
-	Spawn ();
+	Death ();
+}
+
+//function to pause game
+function Pause ()
+{
+	//the game is paused
+	isPaused = true;
+	//change game time to 0(o=off)
+	Time.timeScale = 0;
+}
+
+//function to unpause game
+function UnPause ()
+{
+	//the game is unpaused
+	isPaused = false;
+	//set the game time to 1(1=on)
+	Time.timeScale = 1;
 }
 
 //function to determine collisioon with objects
@@ -73,6 +103,8 @@ function OnCollisionEnter(other : Collision)
 //function for zombie attacks
 function ZombieAttack ()
 {
+	//turn off canJump(redundancy)
+	canJump = false;
 	//wait for a certain amount of time for animation
 	yield WaitForSeconds(0.5);
 	// run attempts counter function
@@ -95,6 +127,8 @@ function IsNotMoving ()
 
 function Update () 
 {
+	//so the games screen doesnt go to sleep
+	Screen.sleepTimeout = SleepTimeout.NeverSleep;
 	//if automove is false, call this function
 	if(!autoMove)
 	{
@@ -127,6 +161,19 @@ function Update ()
 			//shoot cooldown number(arbitrary)
 			shootCool = 1;
 		}
+	}
+	//if the ESC key is pressed
+	if(Input.GetKey(KeyCode.Escape) && !isPaused)
+	{
+		//run the Pause function
+		Pause ();
+	}
+	
+	//if the enter key is pressed
+	if(Input.GetKey(KeyCode.Return) && isPaused)
+	{
+		//run the UnPause function
+		UnPause ();
 	}
 	//shoot cooldown code
 	if(shootCool > 0)
